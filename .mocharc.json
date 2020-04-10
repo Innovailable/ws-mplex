@@ -1,0 +1,7 @@
+{
+  "spec": "tests/**/*.spec.ts",
+  "require": [
+    "ts-node/register",
+    "./babel_ts_register.js"
+  ]
+}

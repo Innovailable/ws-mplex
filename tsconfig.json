@@ -1,0 +1,17 @@
+{
+	"compilerOptions": {
+		"declaration": true,
+		"target": "ES2020",
+		"lib": [
+			"es2020",
+			"dom"
+		],
+		"moduleResolution": "node",
+		"noImplicitAny": true,
+		"strict": true,
+		"sourceMap": true
+	},
+	"include": [
+		"src/**/*.ts"
+	]
+}
