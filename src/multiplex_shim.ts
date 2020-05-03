@@ -8,6 +8,7 @@ type CloseHandler = (reason: Error | null, cb: ResponseCb) => void;
 export interface MultiplexShim {
   write: DataHandler;
   send_close: CloseHandler;
+  release: () => void;
 
   receive?: DataHandler;
   receive_close?: CloseHandler;

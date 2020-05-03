@@ -55,7 +55,10 @@ export class MultiplexStream extends Duplex {
   }
 
   _destroy(reason: Error | null, callback: (err: Error | null) => void) {
-    this.shim.send_close(reason, (err) => callback(err ?? null));
+    this.shim.send_close(reason, (err) => {
+      callback(err ?? null);
+      this.shim.release();
+    });
 
     this.doReceive();
   }

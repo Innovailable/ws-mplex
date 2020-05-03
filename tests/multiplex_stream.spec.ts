@@ -33,6 +33,7 @@ describe("MultiplexStream", () => {
     const shim: MultiplexShim = {
       write: (data, cb) => null,
       send_close: (data, cb) => null,
+      release: () => null,
     };
 
     let stream: MultiplexStream;
@@ -210,6 +211,7 @@ describe("MultiplexStream", () => {
         callbacks.push(cb);
       },
       send_close: (data, cb) => null,
+      release: () => null,
     };
 
     let stream: MultiplexStream;

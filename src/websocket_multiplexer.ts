@@ -232,6 +232,9 @@ export class WebsocketMultiplexer extends EventEmitter {
     const shim: MultiplexShim = {
       write: this.sendData.bind(this, channel),
       send_close: this.sendClose.bind(this, channel),
+      release: () => {
+        this.shims.delete(channel);
+      }
     };
 
     this.shims.set(channel, shim);
