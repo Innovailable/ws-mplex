@@ -235,6 +235,16 @@ describe("MultiplexStream", () => {
       expect(written[0]).to.equal(data);;
     });
 
+    it("should send null on end", (done) => {
+      stream.on('finish', () => {
+        expect(written[0]).to.equal(null);;
+        done();
+      });
+
+      //shim.write = (buf, cb) => cb();
+      stream.end();
+    });
+
     it("should stop sending if too many outstanding", () => {
       const data = createBuffer(0, 20);
 

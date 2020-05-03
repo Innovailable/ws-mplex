@@ -32,6 +32,10 @@ export class MultiplexStream extends Duplex {
     shim.receive_close = this.handleClose.bind(this);
   }
 
+  _final(cb: ResponseCb) {
+    this.shim.write(null, cb);
+  }
+
   _write(chunk: Buffer, encoding: string, cb: ResponseCb) {
     const chunkSize = chunk.length;
     this.openSendSize += chunkSize;
