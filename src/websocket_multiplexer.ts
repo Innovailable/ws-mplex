@@ -54,18 +54,20 @@ export class WebsocketMultiplexer extends EventEmitter {
     });
   }
 
-  createStream(udata: any, cb: CreateCb) {
-    const channel = this.nextChannel;
-    this.nextChannel += 2;
+  createStream(udata: any): Promise<Duplex> {
+    return new Promise<Duplex>((resolve, reject) => {
+      const channel = this.nextChannel;
+      this.nextChannel += 2;
 
-    this.sendCreate(channel, udata, (err) => {
-      if(err != null) {
-	cb(err);
-	return;
-      }
+      this.sendCreate(channel, udata, (err) => {
+        if(err != null) {
+          reject(err);
+          return;
+        }
 
-      const stream = this.createMultiplexStream(channel);
-      cb(null, stream)
+        const stream = this.createMultiplexStream(channel);
+        resolve(stream);
+      });
     });
   }
 

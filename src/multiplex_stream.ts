@@ -3,8 +3,6 @@ import { Duplex, DuplexOptions } from "stream";
 import { ResponseCb } from "./types";
 import { MultiplexShim } from "./multiplex_shim";
 
-const SEND_TOLERANCE = 16 * 1024;
-
 type ReceiveQueueEntry = [(Buffer | null), ResponseCb];
 
 export interface MultiplexStreamOptions {
