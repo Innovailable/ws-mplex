@@ -18,7 +18,7 @@ export class MultiplexStream extends Duplex {
   private receiveQueue = Array<ReceiveQueueEntry>();
   private openSendSize = 0;
   private writeMaxOutstanding: number;
-  private sendCb?: ResponseCb;
+  private sendCb?: ResponseCb = undefined;
 
   constructor(shim: MultiplexShim, options: MultiplexStreamOptions = {}) {
     super({
@@ -40,14 +40,19 @@ export class MultiplexStream extends Duplex {
       this.openSendSize -= chunkSize;
 
       if(this.sendCb != null && this.openSendSize <= this.writeMaxOutstanding) {
-	this.sendCb();
-	delete this.sendCb;
+        const { sendCb } = this;
+        this.sendCb = undefined;
+        sendCb();
       }
     });
 
     // TODO never fails
 
     if(this.openSendSize > this.writeMaxOutstanding) {
+      if(this.sendCb != null) {
+        throw new Error("Trying to set send callback with callback already set");
+      }
+
       this.sendCb = cb;
     } else {
       cb();
