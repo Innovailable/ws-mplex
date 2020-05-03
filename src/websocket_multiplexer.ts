@@ -14,11 +14,11 @@ type OnCreateEvent = (userData: any, cb: OnCreateCb) => void;
 
 type CreateCb = (err: Error | null, stream?: Duplex) => void;
 
-interface WebSocketMultiplexerOptions extends MultiplexStreamOptions {
+export interface WebSocketMultiplexerOptions extends MultiplexStreamOptions {
   even: boolean;
 };
 
-class WebsocketMultiplexer extends EventEmitter {
+export class WebsocketMultiplexer extends EventEmitter {
   oncreate?: OnCreateEvent;
 
   private websocket: Websocket;
